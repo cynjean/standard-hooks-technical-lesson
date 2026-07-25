@@ -1,18 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect, useId } from "react";
 
 function ProfileForm() {
   // Step 1: Create state for user input (before adding useRef and useId)
   const [userName, setUserName] = useState("");
-
-  // TODO: Add useRef to focus the input field when the component mounts
+ // TODO: Add useRef to focus the input field when the component mounts
+  const inputRef = useRef(null);
+  //Generate a unique Id for the input field
+  const inputId = useId();
+  //Use useEffect to focus the input field when the component mounts 
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
   // TODO: Add useId to generate a unique ID for the input field
 
   return (
     <div>
       <h2>Profile Form</h2>
       {/* TODO: Update this label-input pair to use the dynamically generated ID */}
-      <label>Name:</label>
-      <input
+      <label htmlFor={inputId}>Name:</label> // use the genrated ID in the label and input
+      <input //Attach the ref to the input
+        id={inputId}
+        ref={inputRef}
         type="text"
         value={userName}
         onChange={(e) => setUserName(e.target.value)}
